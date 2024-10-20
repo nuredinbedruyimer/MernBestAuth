@@ -8,7 +8,7 @@ const router = express.Router()
 router.get("/check-auth", authMiddleware, checkAuthController)
 
 router.post("/signup", userSignupController)
-router.post("/verify", verifyEmailController)
+router.post("/verify-email", verifyEmailController)
 router.post("/login", userLoginController)
 router.post("/logout", userLogoutController)
 router.post("/forgot-password", forgotPasswordController)

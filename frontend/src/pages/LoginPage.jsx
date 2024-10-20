@@ -1,15 +1,32 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, Lock, Loader } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Input from "../components/Input";
+import { useAuthStore } from "../store/authStore";
+import toast from "react-hot-toast";
 
 const LoginPage = () => {
 
-    const [isLoading, setIsLoading] = useState(false)
+    const {error, isLoading, login}= useAuthStore()
+    const navigate = useNavigate()
+
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+
 
 
 	const handleLogin = async (e) => {
+        e.preventDefault();
+        try {
+            await login(email, password)
+            toast.success("Login Succussfully !!")
+            navigate("/")
+            
+        } catch (error) {
+            console.log("Error In Login Page : ", error)
+            
+        }
 	
 	};
 
@@ -30,16 +47,16 @@ const LoginPage = () => {
 						icon={Mail}
 						type='email'
 						placeholder='Email Address'
-						// value={email}
-						// onChange={(e) => setEmail(e.target.value)}
+						value={email}
+						onChange={(e) => setEmail(e.target.value)}
 					/>
 
 					<Input
 						icon={Lock}
 						type='password'
 						placeholder='Password'
-						// value={password}
-						// onChange={(e) => setPassword(e.target.value)}
+						value={password}
+						onChange={(e) => setPassword(e.target.value)}
 					/>
 
 					<div className='flex items-center mb-6'>
