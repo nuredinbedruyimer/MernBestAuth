@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import PasswordStrength from "../components/PasswordStrength";
 import { useAuthStore } from "../store/authStore";
+import toast from "react-hot-toast"
 
 const SignupPage = () => {
 
@@ -21,6 +22,8 @@ const SignupPage = () => {
         
         try {
             await signup(email, password, name)
+			toast.success("User Register Successfully, Please Verify Your")
+			
             navigate("/verify-email")
             
 

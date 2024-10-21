@@ -73,7 +73,6 @@ export const userSignupController = async(req, res) =>{
         })
         await user.save()
 
-        generateTokenAndSetCookie(res, user._id);
 
         sendVerificationEmail(user.email, verificationCode)
 
@@ -100,7 +99,7 @@ export const userSignupController = async(req, res) =>{
         
     }
 
-}
+}         
 
 //  Verify The Email Verification
 
@@ -128,8 +127,11 @@ export const  verifyEmailController =  async(req, res) =>{
         user.verificationTokenExpireAt = undefined
 
         await user.save()
+        generateTokenAndSetCookie(res, user._id);
+
 
         sendWellcomeEmail(user.email, user.name)
+        
 
         res.status(200).json({
             "Status":"Success", 
